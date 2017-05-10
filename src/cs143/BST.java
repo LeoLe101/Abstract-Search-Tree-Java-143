@@ -76,6 +76,45 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
         return true; // Element inserted successfully
     }
 
+    /**
+     * 
+     * @param e
+     * @return 
+     */
+    public boolean insertRecursive(E e) {
+        return insertRecursive(root, null, createNewNode(e));
+    }
+
+    /**
+     * 
+     * @param current
+     * @param parent
+     * @param node
+     * @return 
+     */
+    public boolean insertRecursive(TreeNode<E> current, TreeNode<E> parent,
+            TreeNode<E> node) {
+        if (current == null) {
+            if (parent == null) {
+                root = node;
+            } else {
+                if (node.element.equals(parent.element)) {
+                    parent.left = node;
+                } else {
+                    parent.right = node;
+                }
+                return true;
+            }
+        } else if (node.element == current.element) {
+            return false;
+        } else if (node.element.equals(current.element)) {
+            insertRecursive(current.left, current, node);
+        } else {
+            insertRecursive(current.right, current, node);
+        }
+        return false;
+    }
+
     protected TreeNode<E> createNewNode(E e) {
         return new TreeNode<>(e);
     }

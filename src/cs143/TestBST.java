@@ -6,13 +6,13 @@ public class TestBST {
 
         // Create a BST
         BST<String> tree = new BST<>();
-        tree.insert("George");
-        tree.insert("Michael");
-        tree.insert("Tom");
-        tree.insert("Adam");
-        tree.insert("Jones");
-        tree.insert("Peter");
-        tree.insert("Daniel");
+        tree.insertRecursive("George");
+        tree.insertRecursive("Michael");
+        tree.insertRecursive("Tom");
+        tree.insertRecursive("Adam");
+        tree.insertRecursive("Jones");
+        tree.insertRecursive("Peter");
+        tree.insertRecursive("Daniel");
 
         // Test inserting the same value
         tree.insert("Daniel"); //insert the same value for coverage
@@ -22,7 +22,7 @@ public class TestBST {
 
         // Traverse tree
         System.out.print("Inorder (sorted): ");
-        tree.list();
+        System.out.println(tree.list());
         System.out.print("\nPostorder: ");
         tree.postorder();
         System.out.print("\nPreorder: ");
@@ -46,7 +46,7 @@ public class TestBST {
         Integer[] numbers = {2, 4, 3, 1, 8, 5, 6, 7};
         BST<Integer> intTree = new BST<>(numbers);
         System.out.print("\nInorder (sorted): ");
-        intTree.list();
+        System.out.println(intTree.list());
 
         //Test delete
         tree = new BST<>();
@@ -89,7 +89,7 @@ public class TestBST {
     public static void printTree(BST tree) {
         // Traverse tree
         System.out.print("Inorder (sorted): ");
-        tree.list();
+        System.out.println(tree.list());
         System.out.print("\nPostorder: ");
         tree.postorder();
         System.out.print("\nPreorder: ");
