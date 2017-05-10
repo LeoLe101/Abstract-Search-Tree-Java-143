@@ -1,273 +1,336 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BST.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;BSTCode&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">cs143</a> &gt; <span class="el_source">BST.java</span></div><h1>BST.java</h1><pre class="source lang-java linenums">package cs143;
 
-public class BST&lt;E extends Comparable&lt;E&gt;&gt; 
-    extends AbstractTree&lt;E&gt; {
-  protected TreeNode&lt;E&gt; root;
-<span class="fc" id="L6">  protected int size = 0;</span>
+public class BST&lt;E extends Comparable&lt;E&gt;&gt; implements Tree&lt;E&gt; {
 
-  /** Create a default binary tree */
-<span class="fc" id="L9">  public BST() {</span>
-<span class="fc" id="L10">  }</span>
+    protected TreeNode&lt;E&gt; root;
+<span class="fc" id="L6">    protected int size = 0;</span>
 
-  /** Create a binary tree from an array of objects */
-<span class="fc" id="L13">  public BST(E[] objects) {</span>
-<span class="fc bfc" id="L14" title="All 2 branches covered.">    for (int i = 0; i &lt; objects.length; i++)</span>
-<span class="fc" id="L15">      insert(objects[i]);</span>
-<span class="fc" id="L16">  }</span>
+    /**
+     * Create a default binary tree
+     */
+<span class="fc" id="L11">    public BST() {</span>
+<span class="fc" id="L12">    }</span>
 
-  @Override /** Returns true if the element is in the tree */
-  public boolean search(E e) {
-<span class="fc" id="L20">    TreeNode&lt;E&gt; current = root; // Start from the root</span>
-
-<span class="pc bpc" id="L22" title="1 of 2 branches missed.">    while (current != null) {</span>
-<span class="fc bfc" id="L23" title="All 2 branches covered.">      if (e.compareTo(current.element) &lt; 0) {</span>
-<span class="fc" id="L24">        current = current.left;</span>
-      }
-<span class="fc bfc" id="L26" title="All 2 branches covered.">      else if (e.compareTo(current.element) &gt; 0) {</span>
-<span class="fc" id="L27">        current = current.right;</span>
-      }
-      else // element matches current.element
-<span class="fc" id="L30">        return true; // Element is found</span>
-    }
-
-<span class="nc" id="L33">    return false;</span>
-  }
-
-  @Override /** Insert element o into the binary tree
-   * Return true if the element is inserted successfully */
-  public boolean insert(E e) {
-<span class="fc bfc" id="L39" title="All 2 branches covered.">    if (root == null)</span>
-<span class="fc" id="L40">      root = createNewNode(e); // Create a new root</span>
-    else {
-      // Locate the parent node
-<span class="fc" id="L43">      TreeNode&lt;E&gt; parent = null;</span>
-<span class="fc" id="L44">      TreeNode&lt;E&gt; current = root;</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">      while (current != null)</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (e.compareTo(current.element) &lt; 0) {</span>
-<span class="fc" id="L47">          parent = current;</span>
-<span class="fc" id="L48">          current = current.left;</span>
+    /**
+     * Create a binary tree from an array of objects
+     */
+<span class="fc" id="L17">    public BST(E[] objects) {</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        for (int i = 0; i &lt; objects.length; i++) {</span>
+<span class="fc" id="L19">            insert(objects[i]);</span>
         }
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        else if (e.compareTo(current.element) &gt; 0) {</span>
-<span class="fc" id="L51">          parent = current;</span>
-<span class="fc" id="L52">          current = current.right;</span>
+<span class="fc" id="L21">    }</span>
+
+    @Override
+    /**
+     * Returns true if the element is in the tree
+     */
+    public boolean search(E e) {
+<span class="fc" id="L28">        TreeNode&lt;E&gt; current = root; // Start from the root</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        while (current != null) {</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            if (e.compareTo(current.element) &lt; 0) {</span>
+<span class="fc" id="L31">                current = current.left;</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">            } else if (e.compareTo(current.element) &gt; 0) {</span>
+<span class="fc" id="L33">                current = current.right;</span>
+            } else {
+                // element matches current.element
+<span class="fc" id="L36">                return true; // Element is found</span>
+            }
         }
-        else
-<span class="nc" id="L55">          return false; // Duplicate node not inserted</span>
-
-      // Create the new node and attach it to the parent node
-<span class="fc bfc" id="L58" title="All 2 branches covered.">      if (e.compareTo(parent.element) &lt; 0)</span>
-<span class="fc" id="L59">        parent.left = createNewNode(e);</span>
-      else
-<span class="fc" id="L61">        parent.right = createNewNode(e);</span>
+<span class="fc" id="L39">        return false;</span>
     }
 
-<span class="fc" id="L64">    size++;</span>
-<span class="fc" id="L65">    return true; // Element inserted successfully</span>
-  }
-
-  protected TreeNode&lt;E&gt; createNewNode(E e) {
-<span class="fc" id="L69">    return new TreeNode&lt;&gt;(e);</span>
-  }
-
-  @Override /** Inorder traversal from the root */
-  public void inorder() {
-<span class="fc" id="L74">    inorder(root);</span>
-<span class="fc" id="L75">  }</span>
-
-  /** Inorder traversal from a subtree */
-  protected void inorder(TreeNode&lt;E&gt; root) {
-<span class="fc bfc" id="L79" title="All 2 branches covered.">    if (root == null) return;</span>
-<span class="fc" id="L80">    inorder(root.left);</span>
-<span class="fc" id="L81">    System.out.print(root.element + &quot; &quot;);</span>
-<span class="fc" id="L82">    inorder(root.right);</span>
-<span class="fc" id="L83">  }</span>
-
-  @Override /** Postorder traversal from the root */
-  public void postorder() {
-<span class="fc" id="L87">    postorder(root);</span>
-<span class="fc" id="L88">  }</span>
-
-  /** Postorder traversal from a subtree */
-  protected void postorder(TreeNode&lt;E&gt; root) {
-<span class="fc bfc" id="L92" title="All 2 branches covered.">    if (root == null) return;</span>
-<span class="fc" id="L93">    postorder(root.left);</span>
-<span class="fc" id="L94">    postorder(root.right);</span>
-<span class="fc" id="L95">    System.out.print(root.element + &quot; &quot;);</span>
-<span class="fc" id="L96">  }</span>
-
-  @Override /** Preorder traversal from the root */
-  public void preorder() {
-<span class="fc" id="L100">    preorder(root);</span>
-<span class="fc" id="L101">  }</span>
-
-  /** Preorder traversal from a subtree */
-  protected void preorder(TreeNode&lt;E&gt; root) {
-<span class="fc bfc" id="L105" title="All 2 branches covered.">    if (root == null) return;</span>
-<span class="fc" id="L106">    System.out.print(root.element + &quot; &quot;);</span>
-<span class="fc" id="L107">    preorder(root.left);</span>
-<span class="fc" id="L108">    preorder(root.right);</span>
-<span class="fc" id="L109">  }</span>
-
-  /** This inner class is static, because it does not access 
-      any instance members defined in its outer class */
-  public static class TreeNode&lt;E extends Comparable&lt;E&gt;&gt; {
-    public E element;
-    public TreeNode&lt;E&gt; left;
-    public TreeNode&lt;E&gt; right;
-
-<span class="fc" id="L118">    public TreeNode(E e) {</span>
-<span class="fc" id="L119">      element = e;</span>
-<span class="fc" id="L120">    }</span>
-  }
-
-  @Override /** Get the number of nodes in the tree */
-  public int getSize() {
-<span class="fc" id="L125">    return size;</span>
-  }
-
-  /** Returns the root of the tree */
-  public TreeNode&lt;E&gt; getRoot() {
-<span class="nc" id="L130">    return root;</span>
-  }
-
-  /** Returns a path from the root leading to the specified element */
-  public java.util.ArrayList&lt;TreeNode&lt;E&gt;&gt; path(E e) {
-<span class="fc" id="L135">    java.util.ArrayList&lt;TreeNode&lt;E&gt;&gt; list =</span>
-      new java.util.ArrayList&lt;&gt;();
-<span class="fc" id="L137">    TreeNode&lt;E&gt; current = root; // Start from the root</span>
-
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">    while (current != null) {</span>
-<span class="fc" id="L140">      list.add(current); // Add the node to the list</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">      if (e.compareTo(current.element) &lt; 0) {</span>
-<span class="fc" id="L142">        current = current.left;</span>
-      }
-<span class="fc bfc" id="L144" title="All 2 branches covered.">      else if (e.compareTo(current.element) &gt; 0) {</span>
-<span class="fc" id="L145">        current = current.right;</span>
-      }
-      else
-        break;
+    @Override
+    /**
+     * Insert element o into the binary tree Return true if the element is
+     * inserted successfully
+     */
+    public boolean insert(E e) {
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (root == null) {</span>
+<span class="fc" id="L49">            root = createNewNode(e); // Create a new root</span>
+        } else {
+            // Locate the parent node
+<span class="fc" id="L52">            TreeNode&lt;E&gt; parent = null;</span>
+<span class="fc" id="L53">            TreeNode&lt;E&gt; current = root;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            while (current != null) {</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                if (e.compareTo(current.element) &lt; 0) {</span>
+<span class="fc" id="L56">                    parent = current;</span>
+<span class="fc" id="L57">                    current = current.left;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">                } else if (e.compareTo(current.element) &gt; 0) {</span>
+<span class="fc" id="L59">                    parent = current;</span>
+<span class="fc" id="L60">                    current = current.right;</span>
+                } else {
+<span class="fc" id="L62">                    return false; // Duplicate node not inserted</span>
+                }
+            }
+            // Create the new node and attach it to the parent node
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (e.compareTo(parent.element) &lt; 0) {</span>
+<span class="fc" id="L67">                parent.left = createNewNode(e);</span>
+            } else {
+<span class="fc" id="L69">                parent.right = createNewNode(e);</span>
+            }
+        }
+<span class="fc" id="L72">        size++;</span>
+<span class="fc" id="L73">        return true; // Element inserted successfully</span>
     }
 
-<span class="fc" id="L151">    return list; // Return an array list of nodes</span>
-  }
-
-  @Override /** Delete an element from the binary tree.
-   * Return true if the element is deleted successfully
-   * Return false if the element is not in the tree */
-  public boolean delete(E e) {
-    // Locate the node to be deleted and also locate its parent node
-<span class="fc" id="L159">    TreeNode&lt;E&gt; parent = null;</span>
-<span class="fc" id="L160">    TreeNode&lt;E&gt; current = root;</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">    while (current != null) {</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">      if (e.compareTo(current.element) &lt; 0) {</span>
-<span class="fc" id="L163">        parent = current;</span>
-<span class="fc" id="L164">        current = current.left;</span>
-      }
-<span class="fc bfc" id="L166" title="All 2 branches covered.">      else if (e.compareTo(current.element) &gt; 0) {</span>
-<span class="fc" id="L167">        parent = current;</span>
-<span class="fc" id="L168">        current = current.right;</span>
-      }
-      else
-        break; // Element is in the tree pointed at by current
+    protected TreeNode&lt;E&gt; createNewNode(E e) {
+<span class="fc" id="L77">        return new TreeNode&lt;&gt;(e);</span>
     }
 
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">    if (current == null)</span>
-<span class="nc" id="L175">      return false; // Element is not in the tree</span>
+    /**
+     * In-order traversal from the root
+     */
+    public void list() {
+<span class="fc" id="L84">        inorder(root);</span>
+<span class="fc" id="L85">    }</span>
 
-    // Case 1: current has no left child
-<span class="fc bfc" id="L178" title="All 2 branches covered.">    if (current.left == null) {</span>
-      // Connect the parent with the right child of the current node
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">      if (parent == null) {</span>
-<span class="nc" id="L181">        root = current.right;</span>
-      }
-      else {
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        if (e.compareTo(parent.element) &lt; 0)</span>
-<span class="fc" id="L185">          parent.left = current.right;</span>
-        else
-<span class="nc" id="L187">          parent.right = current.right;</span>
-      }
-    }
-    else {
-      // Case 2: The current node has a left child
-      // Locate the rightmost node in the left subtree of
-      // the current node and also its parent
-<span class="fc" id="L194">      TreeNode&lt;E&gt; parentOfRightMost = current;</span>
-<span class="fc" id="L195">      TreeNode&lt;E&gt; rightMost = current.left;</span>
+    /**
+     * In-order traversal from a subtree
+     */
+    protected void inorder(TreeNode&lt;E&gt; root) {
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (root == null) {</span>
+<span class="fc" id="L92">            return;</span>
+        }
+<span class="fc" id="L94">        inorder(root.left);</span>
+<span class="fc" id="L95">        System.out.print(root.element + &quot; &quot;);</span>
+<span class="fc" id="L96">        inorder(root.right);</span>
+<span class="fc" id="L97">    }</span>
 
-<span class="fc bfc" id="L197" title="All 2 branches covered.">      while (rightMost.right != null) {</span>
-<span class="fc" id="L198">        parentOfRightMost = rightMost;</span>
-<span class="fc" id="L199">        rightMost = rightMost.right; // Keep going to the right</span>
-      }
+    /**
+     * Postorder traversal from the root
+     */
+    public void postorder() {
+<span class="fc" id="L103">        postorder(root);</span>
+<span class="fc" id="L104">    }</span>
 
-      // Replace the element in current by the element in rightMost
-<span class="fc" id="L203">      current.element = rightMost.element;</span>
+    /**
+     * Postorder traversal from a subtree
+     */
+    protected void postorder(TreeNode&lt;E&gt; root) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (root == null) {</span>
+<span class="fc" id="L111">            return;</span>
+        }
+<span class="fc" id="L113">        postorder(root.left);</span>
+<span class="fc" id="L114">        postorder(root.right);</span>
+<span class="fc" id="L115">        System.out.print(root.element + &quot; &quot;);</span>
+<span class="fc" id="L116">    }</span>
 
-      // Eliminate rightmost node
-<span class="fc bfc" id="L206" title="All 2 branches covered.">      if (parentOfRightMost.right == rightMost)</span>
-<span class="fc" id="L207">        parentOfRightMost.right = rightMost.left;</span>
-      else
-        // Special case: parentOfRightMost == current
-<span class="fc" id="L210">        parentOfRightMost.left = rightMost.left;     </span>
-    }
+    /**
+     * Pre-order traversal from the root
+     */
+    public void preorder() {
+<span class="fc" id="L122">        preorder(root);</span>
+<span class="fc" id="L123">    }</span>
 
-<span class="fc" id="L213">    size--;</span>
-<span class="fc" id="L214">    return true; // Element deleted successfully</span>
-  }
+    /**
+     * Pre-order traversal from a subtree
+     */
+    protected void preorder(TreeNode&lt;E&gt; root) {
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (root == null) {</span>
+<span class="fc" id="L130">            return;</span>
+        }
+<span class="fc" id="L132">        System.out.print(root.element + &quot; &quot;);</span>
+<span class="fc" id="L133">        preorder(root.left);</span>
+<span class="fc" id="L134">        preorder(root.right);</span>
+<span class="fc" id="L135">    }</span>
 
-  @Override /** Obtain an iterator. Use inorder. */
-  public java.util.Iterator&lt;E&gt; iterator() {
-<span class="fc" id="L219">    return new InorderIterator();</span>
-  }
+    /**
+     * This inner class is static, because it does not access any instance
+     * members defined in its outer class
+     */
+    public static class TreeNode&lt;E extends Comparable&lt;E&gt;&gt; {
 
-  // Inner class InorderIterator
-  private class InorderIterator implements java.util.Iterator&lt;E&gt; {
-    // Store the elements in a list
-<span class="fc" id="L225">    private java.util.ArrayList&lt;E&gt; list =</span>
-      new java.util.ArrayList&lt;&gt;();
-<span class="fc" id="L227">    private int current = 0; // Point to the current element in list</span>
+        public E element;
+        public TreeNode&lt;E&gt; left;
+        public TreeNode&lt;E&gt; right;
 
-<span class="fc" id="L229">    public InorderIterator() {</span>
-<span class="fc" id="L230">      inorder(); // Traverse binary tree and store elements in list</span>
-<span class="fc" id="L231">    }</span>
-
-    /** Inorder traversal from the root*/
-    private void inorder() {
-<span class="fc" id="L235">      inorder(root);</span>
-<span class="fc" id="L236">    }</span>
-
-    /** Inorder traversal from a subtree */
-    private void inorder(TreeNode&lt;E&gt; root) {
-<span class="fc bfc" id="L240" title="All 2 branches covered.">      if (root == null)return;</span>
-<span class="fc" id="L241">      inorder(root.left);</span>
-<span class="fc" id="L242">      list.add(root.element);</span>
-<span class="fc" id="L243">      inorder(root.right);</span>
-<span class="fc" id="L244">    }</span>
-
-    @Override /** More elements for traversing? */
-    public boolean hasNext() {
-<span class="fc bfc" id="L248" title="All 2 branches covered.">      if (current &lt; list.size())</span>
-<span class="fc" id="L249">        return true;</span>
-
-<span class="fc" id="L251">      return false;</span>
+<span class="fc" id="L147">        public TreeNode(E e) {</span>
+<span class="fc" id="L148">            element = e;</span>
+<span class="fc" id="L149">        }</span>
     }
 
-    @Override /** Get the current element and move to the next */
-    public E next() {
-<span class="fc" id="L256">      return list.get(current++);</span>
+    @Override
+    /**
+     * Get the number of nodes in the tree
+     */
+    public int getSize() {
+<span class="fc" id="L157">        return size;</span>
     }
 
-    @Override /** Remove the current element */
-    public void remove() {
-<span class="nc" id="L261">      delete(list.get(current)); // Delete the current element</span>
-<span class="nc" id="L262">      list.clear(); // Clear the list</span>
-<span class="nc" id="L263">      inorder(); // Rebuild the list</span>
-<span class="nc" id="L264">    }</span>
-  }
+    /**
+     * Returns the root of the tree
+     */
+    public TreeNode&lt;E&gt; getRoot() {
+<span class="fc" id="L164">        return root;</span>
+    }
 
-  /** Remove all elements from the tree */
-  public void clear() {
-<span class="nc" id="L269">    root = null;</span>
-<span class="nc" id="L270">    size = 0;</span>
-<span class="nc" id="L271">  }</span>
+    /**
+     * Returns a path from the root leading to the specified element
+     */
+    public java.util.ArrayList&lt;TreeNode&lt;E&gt;&gt; path(E e) {
+<span class="fc" id="L171">        java.util.ArrayList&lt;TreeNode&lt;E&gt;&gt; list</span>
+                = new java.util.ArrayList&lt;&gt;();
+<span class="fc" id="L173">        TreeNode&lt;E&gt; current = root; // Start from the root</span>
+
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        while (current != null) {</span>
+<span class="fc" id="L176">            list.add(current); // Add the node to the list</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            if (e.compareTo(current.element) &lt; 0) {</span>
+<span class="fc" id="L178">                current = current.left;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">            } else if (e.compareTo(current.element) &gt; 0) {</span>
+<span class="fc" id="L180">                current = current.right;</span>
+            } else {
+                break;
+            }
+        }
+
+<span class="fc" id="L186">        return list; // Return an array list of nodes</span>
+    }
+
+    @Override
+    /**
+     * Delete an element from the binary tree. Return true if the element is
+     * deleted successfully Return false if the element is not in the tree
+     */
+    public boolean delete(E e) {
+        // Locate the node to be deleted and also locate its parent node
+<span class="fc" id="L196">        TreeNode&lt;E&gt; parent = null;</span>
+<span class="fc" id="L197">        TreeNode&lt;E&gt; current = root;</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">        while (current != null) {</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">            if (e.compareTo(current.element) &lt; 0) {</span>
+<span class="fc" id="L200">                parent = current;</span>
+<span class="fc" id="L201">                current = current.left;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">            } else if (e.compareTo(current.element) &gt; 0) {</span>
+<span class="fc" id="L203">                parent = current;</span>
+<span class="fc" id="L204">                current = current.right;</span>
+            } else {
+                break; // Element is in the tree pointed at by current
+            }
+        }
+
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (current == null) {</span>
+<span class="nc" id="L211">            return false; // Element is not in the tree</span>
+        }
+        // Case 1: current has no left child
+<span class="fc bfc" id="L214" title="All 2 branches covered.">        if (current.left == null) {</span>
+            // Connect the parent with the right child of the current node
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            if (parent == null) {</span>
+<span class="nc" id="L217">                root = current.right;</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">            } else if (e.compareTo(parent.element) &lt; 0) {</span>
+<span class="fc" id="L219">                parent.left = current.right;</span>
+            } else {
+<span class="nc" id="L221">                parent.right = current.right;</span>
+            }
+        } else {
+            // Case 2: The current node has a left child
+            // Locate the rightmost node in the left subtree of
+            // the current node and also its parent
+<span class="fc" id="L227">            TreeNode&lt;E&gt; parentOfRightMost = current;</span>
+<span class="fc" id="L228">            TreeNode&lt;E&gt; rightMost = current.left;</span>
+
+<span class="fc bfc" id="L230" title="All 2 branches covered.">            while (rightMost.right != null) {</span>
+<span class="fc" id="L231">                parentOfRightMost = rightMost;</span>
+<span class="fc" id="L232">                rightMost = rightMost.right; // Keep going to the right</span>
+            }
+
+            // Replace the element in current by the element in rightMost
+<span class="fc" id="L236">            current.element = rightMost.element;</span>
+
+            // Eliminate rightmost node
+<span class="fc bfc" id="L239" title="All 2 branches covered.">            if (parentOfRightMost.right == rightMost) {</span>
+<span class="fc" id="L240">                parentOfRightMost.right = rightMost.left;</span>
+            } else // Special case: parentOfRightMost == current
+            {
+<span class="fc" id="L243">                parentOfRightMost.left = rightMost.left;</span>
+            }
+        }
+
+<span class="fc" id="L247">        size--;</span>
+<span class="fc" id="L248">        return true; // Element deleted successfully</span>
+    }
+
+    @Override
+    /**
+     * Obtain an iterator. Use inorder.
+     */
+    public java.util.Iterator&lt;E&gt; iterator() {
+<span class="fc" id="L256">        return new InorderIterator();</span>
+    }
+
+    // Inner class InorderIterator
+    private class InorderIterator implements java.util.Iterator&lt;E&gt; {
+        // Store the elements in a list
+
+<span class="fc" id="L263">        private java.util.ArrayList&lt;E&gt; list</span>
+                = new java.util.ArrayList&lt;&gt;();
+<span class="fc" id="L265">        private int current = 0; // Point to the current element in list</span>
+
+<span class="fc" id="L267">        public InorderIterator() {</span>
+<span class="fc" id="L268">            inorder(); // Traverse binary tree and store elements in list</span>
+<span class="fc" id="L269">        }</span>
+
+        /**
+         * Inorder traversal from the root
+         */
+        private void inorder() {
+<span class="fc" id="L275">            inorder(root);</span>
+<span class="fc" id="L276">        }</span>
+
+        /**
+         * Inorder traversal from a subtree
+         */
+        private void inorder(TreeNode&lt;E&gt; root) {
+<span class="fc bfc" id="L282" title="All 2 branches covered.">            if (root == null) {</span>
+<span class="fc" id="L283">                return;</span>
+            }
+<span class="fc" id="L285">            inorder(root.left);</span>
+<span class="fc" id="L286">            list.add(root.element);</span>
+<span class="fc" id="L287">            inorder(root.right);</span>
+<span class="fc" id="L288">        }</span>
+
+        @Override
+        /**
+         * More elements for traversing?
+         */
+        public boolean hasNext() {
+<span class="fc bfc" id="L295" title="All 2 branches covered.">            if (current &lt; list.size()) {</span>
+<span class="fc" id="L296">                return true;</span>
+            }
+
+<span class="fc" id="L299">            return false;</span>
+        }
+
+        @Override
+        /**
+         * Get the current element and move to the next
+         */
+        public E next() {
+<span class="fc" id="L307">            return list.get(current++);</span>
+        }
+
+        @Override
+        /**
+         * Remove the current element
+         */
+        public void remove() {
+<span class="nc" id="L315">            delete(list.get(current)); // Delete the current element</span>
+<span class="nc" id="L316">            list.clear(); // Clear the list</span>
+<span class="nc" id="L317">            inorder(); // Rebuild the list</span>
+<span class="nc" id="L318">        }</span>
+    }
+
+    /**
+     * Remove all elements from the tree
+     */
+    public void clear() {
+<span class="nc" id="L325">        root = null;</span>
+<span class="nc" id="L326">        size = 0;</span>
+<span class="nc" id="L327">    }</span>
+
+    /**
+     * Return true if the list is empty
+     */
+    public boolean isEmpty() {
+<span class="nc bnc" id="L333" title="All 2 branches missed.">        return size == 0;</span>
+    }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

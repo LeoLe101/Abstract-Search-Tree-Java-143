@@ -1,10 +1,12 @@
 package cs143;
 
-public class BST<E extends Comparable<E>>
-        extends AbstractTree<E> {
+import java.util.ArrayList;
+import java.util.List;
 
-    protected TreeNode<E> root;
-    protected int size = 0;
+public class BST<E extends Comparable<E>> implements Tree<E> {
+
+    private TreeNode<E> root;
+    private int size = 0;
 
     /**
      * Create a default binary tree
@@ -78,27 +80,27 @@ public class BST<E extends Comparable<E>>
         return new TreeNode<>(e);
     }
 
-    @Override
     /**
-     * Inorder traversal from the root
+     * In-order traversal from the root
      */
-    public void inorder() {
-        inorder(root);
+    public List<E> list() {
+        List<E> treeList = new ArrayList<>();
+        inorder(treeList, root);
+        return treeList;
     }
 
     /**
-     * Inorder traversal from a subtree
+     * In-order traversal from a subtree
      */
-    protected void inorder(TreeNode<E> root) {
+    protected void inorder(List<E> list, TreeNode<E> root) {
         if (root == null) {
             return;
         }
-        inorder(root.left);
+        inorder(list, root.left);
         System.out.print(root.element + " ");
-        inorder(root.right);
+        inorder(list, root.right);
     }
 
-    @Override
     /**
      * Postorder traversal from the root
      */
@@ -118,16 +120,15 @@ public class BST<E extends Comparable<E>>
         System.out.print(root.element + " ");
     }
 
-    @Override
     /**
-     * Preorder traversal from the root
+     * Pre-order traversal from the root
      */
     public void preorder() {
         preorder(root);
     }
 
     /**
-     * Preorder traversal from a subtree
+     * Pre-order traversal from a subtree
      */
     protected void preorder(TreeNode<E> root) {
         if (root == null) {
@@ -164,20 +165,20 @@ public class BST<E extends Comparable<E>>
     /**
      * Returns the root of the tree
      */
-    public TreeNode<E> getRoot() {
-        return root;
+    public E getRoot() {
+        return root.element;
     }
 
     /**
      * Returns a path from the root leading to the specified element
      */
-    public java.util.ArrayList<TreeNode<E>> path(E e) {
-        java.util.ArrayList<TreeNode<E>> list
+    public java.util.ArrayList<E> path(E e) {
+        java.util.ArrayList<E> list
                 = new java.util.ArrayList<>();
         TreeNode<E> current = root; // Start from the root
 
         while (current != null) {
-            list.add(current); // Add the node to the list
+            list.add(current.element); // Add the node to the list
             if (e.compareTo(current.element) < 0) {
                 current = current.left;
             } else if (e.compareTo(current.element) > 0) {
@@ -328,5 +329,12 @@ public class BST<E extends Comparable<E>>
     public void clear() {
         root = null;
         size = 0;
+    }
+
+    /**
+     * Return true if the list is empty
+     */
+    public boolean isEmpty() {
+        return size == 0;
     }
 }
