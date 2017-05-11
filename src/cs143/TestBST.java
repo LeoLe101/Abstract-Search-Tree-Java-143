@@ -60,15 +60,15 @@ public class TestBST {
         printTree(tree);
 
         System.out.println("\nAfter delete George:");
-        tree.delete("George");
+        tree.remove("George");
         printTree(tree);
 
         System.out.println("\nAfter delete Adam:");
-        tree.delete("Adam");
+        tree.remove("Adam");
         printTree(tree);
 
         System.out.println("\nAfter delete Michael:");
-        tree.delete("Michael");
+        tree.remove("Michael");
         printTree(tree);
 
         //Test iterator

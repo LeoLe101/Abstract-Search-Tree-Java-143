@@ -77,20 +77,20 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
     }
 
     /**
-     * 
+     *
      * @param e
-     * @return 
+     * @return
      */
     public boolean insertRecursive(E e) {
         return insertRecursive(root, null, createNewNode(e));
     }
 
     /**
-     * 
+     *
      * @param current
      * @param parent
      * @param node
-     * @return 
+     * @return
      */
     public boolean insertRecursive(TreeNode<E> current, TreeNode<E> parent,
             TreeNode<E> node) {
@@ -290,6 +290,71 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
 
         size--;
         return true; // Element deleted successfully
+    }
+
+    public boolean remove(E e) {
+        TreeNode<E> parent = null;
+        TreeNode<E> current = root;
+        if (root == null) {
+            return false;
+        } else {
+            //Locate the node to be deleted
+            while (current != null) {
+                if (e.compareTo(current.element) < 0) {
+                    parent = current;
+                    current = current.left;
+                } else if (e.compareTo(current.element) > 0) {
+                    parent = current;
+                    current = current.right;
+                } else {
+                    break; // Element is in the tree pointed at by current
+                }
+            }
+            if (current == null) {
+                return false;
+            }
+            remove(current, parent);
+            size--;
+            return true;
+        }
+    }
+
+    private void remove(TreeNode<E> node, TreeNode<E> parent) {
+        if (node.left == null & node.right == null) {
+            if (parent == null) {
+                root = null;
+            } else if (node.element.compareTo(parent.element) < 0) {
+                parent.left = null;
+            } else {
+                parent.right = null;
+            }
+
+        } else if (node.left != null && node.right != null) {
+            TreeNode<E> parentOfRightMost = node;
+            TreeNode<E> rightMost = node.left;
+
+            while (rightMost.right != null) {
+                parentOfRightMost = rightMost;
+                rightMost = rightMost.right; // Keep going to the right
+            }
+            // Replace the element in current by the element in rightMost
+            node.element = rightMost.element;
+            if (parentOfRightMost.right == rightMost) {
+                parentOfRightMost.right = rightMost.left;
+            }
+        } else if (node.left == null) {
+            if (node.element.compareTo(parent.element) < 0) {
+                parent.left = node.right;
+            } else {
+                parent.right = node.right;
+            }
+        } else if (node.right == null) {
+            if (node.element.compareTo(parent.element) < 0) {
+                parent.left = node.left;
+            } else {
+                parent.right = node.left;
+            }
+        }
     }
 
     @Override
